@@ -18,6 +18,7 @@ Or install through RubyGems:
 
 ## Usage
 
+```ruby
     require 'uniform_resource_identifier'
     
     url = "foo://usr:pwd@www.example.co.uk:8042/over/there.htm?name=ferret#nose"
@@ -79,7 +80,8 @@ Or install through RubyGems:
     
     uri.relative.anchor               # => "nose"
     uri.anchor                        # => "nose"
-    
+```
+
 ## URI Graph
 
     +---------------+------------------------------------------------------------------------+
