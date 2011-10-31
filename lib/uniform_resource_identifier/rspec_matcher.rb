@@ -4,7 +4,7 @@ RSpec::Matchers.define(:have_uri_specification) do |uri_specification|
     false.should == true if uri_specification == {}
     
     url = UniformResourceIdentifier.parse(uri_string)
-    uri_specification = uri_specification.to_hash
+    # uri_specification = uri_specification.to_hash # TODO: Needed?
     
     # ======================================================================= #
     # = Protocol/Scheme                                                     = #

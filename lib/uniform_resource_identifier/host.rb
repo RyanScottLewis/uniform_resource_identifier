@@ -74,7 +74,7 @@ class UniformResourceIdentifier
       self.domain.tld
     end
     
-    def tld=(sld)
+    def tld=(tld)
       self.domain.tld = tld
     end
   end
