@@ -16,6 +16,10 @@ class UniformResourceIdentifier
       end
     end
     
+    def blank?
+      @username.blank? && @password.blank?
+    end
+    
     def to_s
       "#{@username}:#{@password}"
     end

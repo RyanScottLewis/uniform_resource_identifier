@@ -3,6 +3,7 @@ require 'uniform_resource_identifier/parser'
 require 'uniform_resource_identifier/path'
 require 'uniform_resource_identifier/query'
 require 'active_support/core_ext/hash'
+require 'active_support/core_ext/object/blank'
 
 class UniformResourceIdentifier
   class Relative
@@ -24,8 +25,8 @@ class UniformResourceIdentifier
     end
     
     def to_s
-      query = "?#{@query}" unless @query.nil?
-      anchor = "##{@anchor}" unless @anchor.nil?
+      query = "?#{@query}" unless @query.blank?
+      anchor = "##{@anchor}" unless @anchor.blank?
       "#{@path}#{query}#{anchor}"
     end
     

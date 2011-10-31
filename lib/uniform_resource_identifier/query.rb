@@ -1,5 +1,6 @@
 require 'uniform_resource_identifier/parsable'
 require 'active_support/core_ext/object/to_query'
+require 'active_support/core_ext/object/blank'
 require 'addressable/uri'
 
 class UniformResourceIdentifier
@@ -17,8 +18,12 @@ class UniformResourceIdentifier
       end
     end
     
+    def blank?
+      @query.blank?
+    end
+    
     def to_s
-      @query.to_query
+      @query.blank? ? "" : @query.to_query
     end
     
     def to_h

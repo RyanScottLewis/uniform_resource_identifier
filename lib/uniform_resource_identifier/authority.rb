@@ -27,8 +27,8 @@ class UniformResourceIdentifier
     end
     
     def to_s
-      user_info = "#{@user_info}@" unless @user_info.nil?
-      port = ":#{@port}" unless @port.nil?
+      user_info = "#{@user_info}@" unless @user_info.blank?
+      port = ":#{@port}" unless @port.blank? || @port == 0 # TODO: Should match 0?
       "#{user_info}#{@host}#{port}"
     end
     

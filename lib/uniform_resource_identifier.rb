@@ -1,3 +1,7 @@
+require 'pathname'
+__LIB__ = Pathname.new(__FILE__).dirname.expand_path
+$:.unshift(__LIB__.to_s) unless $:.include?(__LIB__.to_s)
+
 require 'uniform_resource_identifier/authority'
 require 'uniform_resource_identifier/relative'
 
