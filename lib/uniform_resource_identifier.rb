@@ -207,4 +207,8 @@ class UniformResourceIdentifier
   def absolute?
     !relative?
   end
+  
+  def localhost?
+    !!(self.host =~ /^localhost$/i)
+  end
 end

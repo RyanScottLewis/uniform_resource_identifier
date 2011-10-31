@@ -10,8 +10,11 @@ class UniformResourceIdentifier
     
     def initialize(authority=nil)
       if authority.respond_to?(:to_str)
-        parsed_uri = Parser.parse(authority)
-        # TODO
+        authority = Parser.parse(authority)
+        
+        @user_info = UserInfo.parse(authority[:user_info]) if authority.has_key?(:user_info)
+        @host = Host.parse(authority[:host]) if authority.has_key?(:host)
+        @port = authority[:port].to_i if authority.has_key?(:port)
       elsif authority.respond_to?(:to_hash)
         authority = authority.to_hash.symbolize_keys
         
