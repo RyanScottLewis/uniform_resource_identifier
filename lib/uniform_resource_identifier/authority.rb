@@ -12,7 +12,7 @@ class UniformResourceIdentifier
       if authority.respond_to?(:to_str)
         authority = Parser.parse(authority)
         
-        port = authority[:port].nil? ? nil : authority[:port].to_i if authority.has_key?(:port)
+        port = authority[:port].blank? ? nil : authority[:port].to_i if authority.has_key?(:port)
         
         @user_info = UserInfo.parse(authority[:user_info]) if authority.has_key?(:user_info)
         @host = Host.parse(authority[:host]) if authority.has_key?(:host)
@@ -20,7 +20,7 @@ class UniformResourceIdentifier
       elsif authority.respond_to?(:to_hash)
         authority = authority.to_hash.symbolize_keys
         
-        port = authority[:port].nil? ? nil : authority[:port].to_i if authority.has_key?(:port)
+        port = authority[:port].blank? ? nil : authority[:port].to_i if authority.has_key?(:port)
         
         @user_info = UserInfo.parse(authority[:user_info]) if authority.has_key?(:user_info)
         @host = Host.parse(authority[:host]) if authority.has_key?(:host)

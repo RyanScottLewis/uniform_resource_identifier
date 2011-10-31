@@ -6,7 +6,7 @@ class UniformResourceIdentifier
   class Domain
     extend Parsable
     
-    def initialize(domain)
+    def initialize(domain=nil)
       if domain.respond_to?(:to_str) 
         begin
           pss = PublicSuffixService.parse(domain)

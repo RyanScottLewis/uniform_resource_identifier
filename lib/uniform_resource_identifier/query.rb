@@ -7,7 +7,7 @@ class UniformResourceIdentifier
   class Query
     extend Parsable
     
-    def initialize(query)
+    def initialize(query=nil)
       if query.respond_to?(:to_str)
         query = "#{query =~ /^\?/ ? nil : '?'}#{query.to_str}" # Prepend a question mark if needed
         @query = Addressable::URI.parse(query).query_values
