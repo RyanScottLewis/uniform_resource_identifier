@@ -1,0 +1,147 @@
+# `uniform_resource_identifier`
+
+`uniform_resource_identifier` is a library to split URIs 
+according to RFC 3986 as closely as possible. 
+
+Note that by design, this does not attempt to validate 
+the URI it receives, as that would limit its flexibility.
+
+## Install
+
+Simply drop the following line into your Gemfile:
+
+    gem 'uniform_resource_identifier', '~> 0.1.0'
+
+Or install through RubyGems:
+
+    gem install uniform_resource_identifier
+
+## Usage
+
+    require 'uniform_resource_identifier'
+    
+    url = "foo://usr:pwd@www.example.co.uk:8042/over/there.htm?name=ferret#nose"
+    uri = UniformResourceIdentifier.parse(url)
+    
+    uri.protocol                      # => "foo"
+    
+    uri.authority.to_s                # => "usr:pwd@www.example.co.uk:8042"
+    
+    uri.authority.user_info.to_s      # => "usr:pwd"
+    uri.user_info.to_s                # => "usr:pwd"
+    
+    uri.authority.user_info.username  # => "usr"
+    uri.authority.user_info.password  # => "pwd"
+    uri.user_info.username            # => "usr"
+    uri.user_info.password            # => "pwd"
+    uri.username                      # => "usr"
+    uri.password                      # => "pwd"
+    
+    uri.authority.host.to_s           # => "www.example.co.uk"
+    uri.host.to_s                     # => "www.example.co.uk"
+    
+    uri.authority.host.subdomain      # => "www"
+    uri.authority.subdomain           # => "www"
+    uri.subdomain                     # => "www"
+    
+    uri.authority.host.domain.to_s    # => "example.co.uk"
+    uri.authority.domain.to_s         # => "example.co.uk"
+    uri.domain.to_s                   # => "example.co.uk"
+    
+    uri.authority.host.domain.sld     # => "example"
+    uri.authority.domain.sld          # => "example"
+    uri.domain.sld                    # => "example"
+    uri.sld                           # => "example"
+    
+    uri.authority.host.domain.tld     # => "co.uk"
+    uri.authority.domain.tld          # => "co.uk"
+    uri.domain.tld                    # => "co.uk"
+    uri.tld                           # => "co.uk"
+    
+    uri.authority.port                # => 8042
+    uri.port                          # => 8042
+    
+    uri.relative.to_s                 # => "/over/there.htm?name=ferret#nose"
+    
+    uri.relative.path.to_s            # => "/over/there.htm"
+    uri.path.to_s                     # => "/over/there.htm"
+    
+    uri.relative.path.directory.to_s  # => "/over/"
+    uri.relative.directory.to_s       # => "/over/"
+    uri.directory.to_s                # => "/over/"
+    
+    uri.relative.path.file.to_s       # => "there.htm"
+    uri.relative.file.to_s            # => "there.htm"
+    uri.file.to_s                     # => "there.htm"
+    
+    uri.relative.query                # => { "name" => "ferret" }
+    uri.query                         # => { "name" => "ferret" }
+    
+    uri.relative.anchor               # => "nose"
+    uri.anchor                        # => "nose"
+    
+## URI Graph
+
+    +---------------+------------------------------------------------------------------------+
+    | Legend        | Graph                                                                  |
+    +===============+========================================================================+
+    | protocol      |                                                                        |
+    | authority     |   foo://usr:pwd@www.example.co.uk:8042/over/there.htm?name=ferret#nose |
+    |   user_info   |   \_/   \____________________________/\__________________________/     |
+    |     username  |    |                 |                          |                      |
+    |     password  | protocol         authority                   relative                  |
+    |   host        |                                                                        |
+    |     subdomain +------------------------------------------------------------------------+
+    |     domain    |                                                                        |
+    |       sld     |   foo://usr:pwd@www.example.co.uk:8042/over/there.htm?name=ferret#nose |
+    |       tld     |         \_____/ \_______________/ \__/\_________/ \_________/ \__/     |
+    |   port        |            |           |           |       |           |       |       |
+    | relative      |        user_info      host        port    path       query  anchor     |
+    |   path        |                                                                        |
+    |     directory +------------------------------------------------------------------------+
+    |     file      |                                                                        |
+    |   query       |   foo://usr:pwd@www.example.co.uk:8042/over/there.htm?name=ferret#nose |
+    |   anchor      |         \_/ \_/ \_/ \___________/     \____/\___/                      |
+    |               |          |   |   |           |          |      |                       |
+    |               |   username pass subdomain    domain  directory file                    |
+    |               |                                                                        |
+    |               +------------------------------------------------------------------------+
+    |               |                                                                        |
+    |               |   foo://usr:pwd@www.example.co.uk:8042/over/there.htm?name=ferret#nose |
+    |               |                     \_____/ \___/                                      |
+    |               |                        |      |                                        |
+    |               |                       sld    tld                                       |
+    |               |                                                                        |
+    +---------------+------------------------------------------------------------------------+
+
+## Description
+
+There are two parsing modes: loose (the default, which is meant 
+to be used when working with user input, and is better at reading 
+your mind), and strict (which attempts to split URIs according to 
+RFC 3986).
+
+To change the parsing mode, just pass either `:loose` or `:strict` 
+as the second argument to `UniformResourceIdentifier.parse`.
+
+In loose mode, directories don't need to end with a slash (e.g., 
+the "dir" in "/dir?query" is treated as a directory rather than a 
+file name), and the URI can start with an authority without being 
+preceded by "//" (which means that the "yahoo.com" 
+in "yahoo.com/search/" is treated as the host, rather than part 
+of the directory path).
+
+## Notes
+
+The regular expressions used to split the URI are directly from [parseUri.js](http://stevenlevithan.com/demo/parseuri/js/)
+by [Stephen Levithan](http://stevenlevithan.com/).  
+Parsing of the host is done entirely by the [PublicSuffixService](http://rubygems.org/gems/public_suffix_service) 
+library by [Simone Carletti](http://www.simonecarletti.com/).  
+Parsing of the query string is done entirely by the [Addressable](http://rubygems.org/gems/addressable) 
+library by [Bob Aman](https://rubygems.org/profiles/sporkmonger).  
+Serialization of the query hash is done entirely by the [ActiveSupport](http://rubygems.org/gems/active_support) 
+library by the [Rails](https://github.com/rails/rails) team.  
+
+## Resources
+
+    http://tools.ietf.org/html/rfc3986
