@@ -29,5 +29,13 @@ class UniformResourceIdentifier
     def to_h
       @query
     end
+    
+    def [](key)
+      @query[key]
+    end
+    
+    def []=(key, value)
+      @query[key] = value
+    end
   end
 end
