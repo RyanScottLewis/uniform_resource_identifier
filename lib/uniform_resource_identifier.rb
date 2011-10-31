@@ -148,7 +148,7 @@ class UniformResourceIdentifier
     self.authority.host.domain.tld
   end
   
-  def tld=(sld)
+  def tld=(tld)
     self.authority.host.domain.tld = tld
   end
   
