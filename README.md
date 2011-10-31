@@ -89,22 +89,22 @@ Or install through RubyGems:
     +===============+========================================================================+
     | protocol      |                                                                        |
     | authority     |   foo://usr:pwd@www.example.co.uk:8042/over/there.htm?name=ferret#nose |
-    |   user_info   |   \_/   \____________________________/\__________________________/     |
-    |     username  |    |                 |                          |                      |
-    |     password  | protocol         authority                   relative                  |
+    |   user_info   |   \_/   \____________________________/\______________________________/ |
+    |     username  |    |                 |                               |                 |
+    |     password  | protocol         authority                        relative             |
     |   host        |                                                                        |
     |     subdomain +------------------------------------------------------------------------+
     |     domain    |                                                                        |
     |       sld     |   foo://usr:pwd@www.example.co.uk:8042/over/there.htm?name=ferret#nose |
-    |       tld     |         \_____/ \_______________/ \__/\_________/ \_________/ \__/     |
-    |   port        |            |           |           |       |           |       |       |
-    | relative      |        user_info      host        port    path       query  anchor     |
+    |       tld     |         \_____/ \_______________/ \__/\_____________/ \_________/ \__/ |
+    |   port        |            |           |           |       |               |       /   |
+    | relative      |        user_info      host        port    path           query  anchor |
     |   path        |                                                                        |
     |     directory +------------------------------------------------------------------------+
     |     file      |                                                                        |
     |   query       |   foo://usr:pwd@www.example.co.uk:8042/over/there.htm?name=ferret#nose |
-    |   anchor      |         \_/ \_/ \_/ \___________/     \____/\___/                      |
-    |               |          |   |   |           |          |      |                       |
+    |   anchor      |         \_/ \_/ \_/ \___________/     \____/\_______/                  |
+    |               |          |   |   |           |          |       |                      |
     |               |   username pass subdomain    domain  directory file                    |
     |               |                                                                        |
     |               +------------------------------------------------------------------------+

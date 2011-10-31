@@ -24,7 +24,7 @@ class UniformResourceIdentifier
         @subdomain = host[:subdomain]
         @domain = Domain.new(host[:domain])
       else
-        raise(TypeError, "host must either be a String or a Hash") unless host.nil?
+        raise(TypeError, "host must either be a String or a Hash") unless host.blank??
       end
     end
     
