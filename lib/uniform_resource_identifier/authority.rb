@@ -68,7 +68,7 @@ class UniformResourceIdentifier
     attr_reader :port
     
     def port=(port)
-      @port = port.to_i
+      @port = port
     end
     
     # ======================================================================= #
