@@ -28,6 +28,7 @@ Gem::Specification.new do |s|
   s.add_dependency("public_suffix_service", "~> 0.9.0")
   s.add_dependency("activesupport", ">= 3.0.0")
   s.add_dependency("addressable", "~> 2.2.6")
+  s.add_dependency('i18n', '~> 0.6.0')
   
   s.add_development_dependency("bundler", "~> 1.0.0")
   s.add_development_dependency("rspec", "~> 2.6.0")

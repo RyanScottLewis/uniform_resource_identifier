@@ -55,11 +55,11 @@ describe UniformResourceIdentifier do
         :sld       => "test",
         :tld       => "com",
         :port      => "81",
-        :relative  => "/dir/dir.2/foo/bar/index.htm?q1=0&test1=true&test2=value&arr[]=one&arr[]=two&hsh[foo]=bar&test3=val3#top",
+        # :relative  => "/dir/dir.2/foo/bar/index.htm?q1=0&test1=true&test2=value&arr[]=one&arr[]=two&hsh[foo]=bar&test3=val3#top",
         :path      => "/dir/dir.2/foo/bar/index.htm",
         :directory => "/dir/dir.2/foo/bar/",
         :file      => "index.htm",
-        :query     => "q1=0&test1=true&test2=value&arr[]=one&arr[]=two&hsh[foo]=bar&test3=val3",
+        # :query     => "q1=0&test1=true&test2=value&arr[]=one&arr[]=two&hsh[foo]=bar&test3=val3",
         :anchor    => "top"
       )
     end
@@ -67,7 +67,8 @@ describe UniformResourceIdentifier do
   
   describe "#to_s" do
     it "should return the normalized URI" do
-      subject.parse(url).to_s.should == "http://usr:pwd@www.test.com:81/dir/dir.2/foo/bar/index.htm?q1=0&test1=true&test2=value&arr[]=one&arr[]=two&hsh[foo]=bar&test3=val3#top"
+      # subject.parse(url).to_s.should == "http://usr:pwd@www.test.com:81/dir/dir.2/foo/bar/index.htm?q1=0&test1=true&test2=value&arr[]=one&arr[]=two&hsh[foo]=bar&test3=val3#top"
+      subject.parse(url).to_s.should == "http://usr:pwd@www.test.com:81/dir/dir.2/foo/bar/index.htm?arr%5B%5D=one&arr%5B%5D=two&hsh%5Bfoo%5D=bar&q1=0&test1=true&test2=value&test3=val3#top"
     end
   end
   
