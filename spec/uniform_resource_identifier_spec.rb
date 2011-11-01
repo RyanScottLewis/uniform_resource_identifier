@@ -62,6 +62,10 @@ describe UniformResourceIdentifier do
         # :query     => "q1=0&test1=true&test2=value&arr[]=one&arr[]=two&hsh[foo]=bar&test3=val3",
         :anchor    => "top"
       )
+      
+      url.should have_uri_specification(
+        :host => "www.test.com"
+      )
     end
   end
   

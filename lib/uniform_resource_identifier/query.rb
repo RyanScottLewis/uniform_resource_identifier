@@ -18,8 +18,12 @@ class UniformResourceIdentifier
       end
     end
     
-    def blank?
-      @query.blank?
+    def [](key)
+      @query[key]
+    end
+    
+    def []=(key, value)
+      @query[key] = value
     end
     
     def to_s
@@ -30,12 +34,8 @@ class UniformResourceIdentifier
       @query
     end
     
-    def [](key)
-      @query[key]
-    end
-    
-    def []=(key, value)
-      @query[key] = value
+    def blank?
+      @query.blank?
     end
   end
 end

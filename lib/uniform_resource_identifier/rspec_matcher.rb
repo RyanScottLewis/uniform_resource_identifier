@@ -1,17 +1,15 @@
 RSpec::Matchers.define(:have_uri_specification) do |uri_specification|
   match do |uri_string|
-    
-    
     false.should == true unless uri_specification.respond_to?(:to_hash)
     false.should == true if uri_specification == {}
-
+    
     url = UniformResourceIdentifier.parse(uri_string)
     # uri_specification = uri_specification.to_hash # TODO: Needed?
-
+    
     # ======================================================================= #
     # = Protocol/Scheme                                                     = #
     # ======================================================================= #
-
+    
     if uri_specification.has_key?(:protocol)
       url.protocol.class.should == String
       url.protocol.to_s.should == uri_specification[:protocol]
@@ -21,19 +19,19 @@ RSpec::Matchers.define(:have_uri_specification) do |uri_specification|
     # ======================================================================= #
     # = Authority                                                           = #
     # ======================================================================= #
-
+    
     if uri_specification.has_key?(:authority)
       url.authority.class.should == UniformResourceIdentifier::Authority
       url.authority.to_s.should == uri_specification[:authority]
     end
-
+    
     if uri_specification.has_key?(:user_info)
       url.authority.user_info.class.should == UniformResourceIdentifier::UserInfo
       url.authority.user_info.to_s.should == uri_specification[:user_info]
       url.user_info.class.should == UniformResourceIdentifier::UserInfo # Delegate
       url.user_info.to_s.should == uri_specification[:user_info]        # Delegate
     end
-
+    
     if uri_specification.has_key?(:username)
       url.authority.user_info.username.class.should == String
       url.authority.user_info.username.to_s.should == uri_specification[:username]
@@ -42,7 +40,7 @@ RSpec::Matchers.define(:have_uri_specification) do |uri_specification|
       url.username.class.should == String                                # Delegate
       url.username.to_s.should == uri_specification[:username]           # Delegate
     end
-
+    
     if uri_specification.has_key?(:password)
       url.authority.user_info.password.class.should == String
       url.authority.user_info.password.to_s.should == uri_specification[:password]
@@ -51,14 +49,14 @@ RSpec::Matchers.define(:have_uri_specification) do |uri_specification|
       url.password.class.should == String                                # Delegate
       url.password.to_s.should == uri_specification[:password]           # Delegate
     end
-
+    
     if uri_specification.has_key?(:host)
       url.authority.host.class.should == UniformResourceIdentifier::Host
       url.authority.host.to_s.should == uri_specification[:host]
       url.host.class.should == UniformResourceIdentifier::Host # Delegate
       url.host.to_s.should == uri_specification[:host]         # Delegate
     end
-
+    
     if uri_specification.has_key?(:subdomain)
       url.authority.host.subdomain.class.should == String
       url.authority.host.subdomain.to_s.should == uri_specification[:subdomain]
@@ -67,7 +65,7 @@ RSpec::Matchers.define(:have_uri_specification) do |uri_specification|
       url.subdomain.class.should == String                            # Delegate
       url.subdomain.to_s.should == uri_specification[:subdomain]      # Delegate
     end
-
+    
     if uri_specification.has_key?(:domain)
       url.authority.host.domain.class.should == UniformResourceIdentifier::Domain
       url.authority.host.domain.to_s.should == uri_specification[:domain]
@@ -76,7 +74,7 @@ RSpec::Matchers.define(:have_uri_specification) do |uri_specification|
       url.domain.class.should == UniformResourceIdentifier::Domain      # Delegate
       url.domain.to_s.should == uri_specification[:domain]              # Delegate
     end
-
+    
     if uri_specification.has_key?(:sld)
       url.authority.host.domain.sld.class.should == String
       url.authority.host.sld.to_s.should == uri_specification[:sld]
@@ -85,7 +83,7 @@ RSpec::Matchers.define(:have_uri_specification) do |uri_specification|
       url.sld.class.should == String                      # Delegate
       url.sld.to_s.should == uri_specification[:sld]      # Delegate
     end
-
+    
     if uri_specification.has_key?(:tld)
       url.authority.host.domain.tld.class.should == String
       url.authority.host.tld.to_s.should == uri_specification[:tld]
@@ -94,30 +92,30 @@ RSpec::Matchers.define(:have_uri_specification) do |uri_specification|
       url.tld.class.should == String                      # Delegate
       url.tld.to_s.should == uri_specification[:tld]      # Delegate
     end
-
+    
     if uri_specification.has_key?(:port)
       url.authority.port.class.should == Fixnum
       url.authority.port.to_s.should == uri_specification[:port]
       url.port.class.should == Fixnum                  # Delegate
       url.port.to_s.should == uri_specification[:port] # Delegate
     end
-
+    
     # ======================================================================= #
     # = Relative                                                            = #
     # ======================================================================= #
-
+    
     if uri_specification.has_key?(:relative)
       url.relative.class.should == UniformResourceIdentifier::Relative
       url.relative.to_s.should == uri_specification[:relative]
     end
-
+    
     if uri_specification.has_key?(:path)
       url.relative.path.class.should == UniformResourceIdentifier::Path
       url.relative.path.to_s.should == uri_specification[:path]
       url.path.class.should == UniformResourceIdentifier::Path # Delegate
       url.path.to_s.should == uri_specification[:path]         # Delegate
     end
-
+    
     if uri_specification.has_key?(:directory)
       url.relative.path.directory.class.should == String
       url.relative.path.directory.to_s.should == uri_specification[:directory]
@@ -126,7 +124,7 @@ RSpec::Matchers.define(:have_uri_specification) do |uri_specification|
       url.directory.class.should == String                                # Delegate
       url.directory.to_s.should == uri_specification[:directory]          # Delegate
     end
-
+    
     if uri_specification.has_key?(:file)
       url.relative.path.file.class.should == String
       url.relative.path.file.to_s.should == uri_specification[:file]
@@ -135,14 +133,14 @@ RSpec::Matchers.define(:have_uri_specification) do |uri_specification|
       url.file.class.should == String                                # Delegate
       url.file.to_s.should == uri_specification[:file]               # Delegate
     end
-
+    
     if uri_specification.has_key?(:query)
       url.relative.query.class.should == UniformResourceIdentifier::Query
       url.relative.query.to_s.should == uri_specification[:query]
       url.query.class.should == UniformResourceIdentifier::Query # Delegate
       url.query.to_s.should == uri_specification[:query]         # Delegate
     end
-
+    
     if uri_specification.has_key?(:anchor)
       url.relative.anchor.class.should == String
       url.relative.anchor.to_s.should == uri_specification[:anchor]

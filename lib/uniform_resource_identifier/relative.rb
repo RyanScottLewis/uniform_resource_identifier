@@ -38,6 +38,10 @@ class UniformResourceIdentifier
       }
     end
     
+    def blank?
+      @path.blank? && @query.blank? && @anchor.blank?
+    end
+    
     # ======================================================================= #
     # = Attributes                                                          = #
     # ======================================================================= #

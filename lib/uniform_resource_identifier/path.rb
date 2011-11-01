@@ -28,6 +28,10 @@ class UniformResourceIdentifier
         :file => @file
       }
     end
+    
+    def blank?
+      @directory.blank? && @file.blank?
+    end
     # ======================================================================= #
     # = Attributes                                                          = #
     # ======================================================================= #

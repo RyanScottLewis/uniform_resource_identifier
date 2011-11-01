@@ -45,6 +45,10 @@ class UniformResourceIdentifier
       }
     end
     
+    def blank?
+      @user_info.blank? && @host.blank? && @port.blank?
+    end
+    
     # ======================================================================= #
     # = Attributes                                                          = #
     # ======================================================================= #

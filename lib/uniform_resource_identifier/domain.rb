@@ -32,6 +32,11 @@ class UniformResourceIdentifier
     def to_h
       { :sld => @sld, :tld => @tld }
     end
+    
+    def blank?
+      @sld.blank? && @tld.blank?
+    end
+    
     # ======================================================================= #
     # = Attributes                                                          = #
     # ======================================================================= #
