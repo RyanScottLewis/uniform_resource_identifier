@@ -1,2 +1,3 @@
 * Query methods: subdomain?, tld?, etc...  require 'active_support/core_ext/object/blank'
 * blank? methods for all
+* Subclass String for Authority, Domain, Host, Path, Query, Relative, and UserInfo

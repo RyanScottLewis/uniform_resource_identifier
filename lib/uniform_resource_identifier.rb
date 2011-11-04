@@ -42,6 +42,17 @@ class UniformResourceIdentifier
     end
   end
   
+  def ==(url)
+    return false unless url.respond_to?(:to_s)
+    url = self.class.new(url.to_str) if url.respond_to?(:to_str)
+    
+    url.to_s == self.to_s
+  end
+  
+  # ========================================================================= #
+  # = Serialization                                                         = #
+  # ========================================================================= #
+  
   def to_s
     protocol = "#{@protocol}://" unless @protocol.nil?
     "#{protocol}#{@authority}#{@relative}"

@@ -41,7 +41,7 @@ class UniformResourceIdentifier
     end
     
     def blank?
-      @subdomain.blank && @domain.blank?
+      @subdomain.blank? && @domain.blank?
     end
     
     # ======================================================================= #

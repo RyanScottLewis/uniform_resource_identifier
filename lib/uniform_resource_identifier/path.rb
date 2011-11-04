@@ -6,7 +6,7 @@ class UniformResourceIdentifier
   class Path
     extend Parsable
     
-    def initialize(path)
+    def initialize(path=nil)
       if path.respond_to?(:to_str) 
         parsed_uri = Parser.parse(path)
         @directory, @file = parsed_uri.values_at(:directory, :file)

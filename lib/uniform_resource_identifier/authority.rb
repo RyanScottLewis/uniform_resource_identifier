@@ -66,13 +66,13 @@ class UniformResourceIdentifier
     end
     
     def host=(host)
-      @host = Host.parse(user_info)
+      @host = Host.parse(host)
     end
     
     attr_reader :port
     
     def port=(port)
-      @port = port
+      @port = port.nil? ? nil : port.to_i
     end
     
     # ======================================================================= #
