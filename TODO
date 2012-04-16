@@ -1,3 +1,78 @@
 * Query methods: subdomain?, tld?, etc...  require 'active_support/core_ext/object/blank'
 * blank? methods for all
 * Subclass String for Authority, Domain, Host, Path, Query, Relative, and UserInfo
+
+
+
+# A host consists of a subdomain and a 
+# A domain consists of a tld and a sld
+
+RSpec::Matchers.define(:conform_to_the_conventions_of_this_project) do
+  match do |klass|
+    assertions = []
+    
+    assertions << klass.superclass == String
+    assertions << klass.methods(false).include?(:parse)
+    assertions << klass.instance_methods(false).include?(:to_h)
+    assertions << klass.instance_methods(false).include?(:normalize)
+    assertions << klass.instance_methods(false).include?(:normalize!)
+    assertions << klass.instance_methods(false).include?(:blank?)
+    assertions << klass.instance_methods(false).include?(:valid?)
+    
+    assertions.all? { |a| a == true }.should == true
+  end
+end
+
+STRICT = /^(?:([^:\/?#]+):)?(?:\/\/((?:(([^:@]*)(?::([^:@]*))?)?@)?([^:\/?#]*)(?::(\d*))?))?((((?:[^?#\/]*\/)*)([^?#]*))(?:\?([^#]*))?(?:#(.*))?)/
+LOOSE  = /^(?:(?![^:@]+:[^:@\/]*@)([^:\/?#.]+):)?(?:\/\/)?((?:(([^:@]*)(?::([^:@]*))?)?@)?([^:\/?#]*)(?::(\d*))?)(((\/(?:[^?#](?![^?#\/]*\.[^?#\/.]+(?:[?#]|$)))*\/?)?([^?#\/]*))(?:\?([^#]*))?(?:#(.*))?)/
+
+class ConventionalString < String
+  # Simply returns a Hash containing the captures. The mode option can either be :strict or :loose.
+  def self.parse(uri, mode=:loose)
+    raise(ArgumentError, "mode must either be :loose or :strict") unless [:loose, :strict].include?(mode)
+    
+    regexp = mode == :loose ? LOOSE : STRICT
+    match  = uri.match(regexp)
+    keys   = [
+      :protocol, :authority, :user_info, :username, :password, :host,
+      :port, :relative, :path, :directory, :file, :query, :anchor
+    ]
+    
+    keys.each.with_index.inject({}) do |memo, (key, index)|
+      memo[key] = match.captures[index]
+      memo
+    end
+  end
+end
+
+class Subdomain < ConventionalString
+  
+end
+
+class TopLevelDomain < ConventionalString
+  # Validation is done with PublicSuffix by Simone Carletti.
+  def valid?; end
+end
+
+class SecondLevelDomain < ConventionalString
+  
+end
+
+class Domain < ConventionalString
+  attribute :sld, SecondLevelDomain
+  attribute :tld, TopLevelDomain
+end
+
+class Host < ConventionalString
+  attribute :subdomain, Subdomain
+  attribute :domain, Domain
+end
+  
+host = Host.new("ryans.stuff.some-company.co.uk")
+
+host.subdomain.should == "ryans.stuff"
+host.domain.should == "some-company.co.uk"
+host.domain.sld.should == "some-company"
+host.domain.tld.should == "co.uk"
+
+Host.should conform_to_the_conventions_of_this_project # Hehe

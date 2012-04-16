@@ -137,7 +137,7 @@ of the directory path).
 
 The regular expressions used to split the URI are directly from [parseUri.js](http://stevenlevithan.com/demo/parseuri/js/)
 by [Stephen Levithan](http://stevenlevithan.com/).  
-Parsing of the host is done entirely by the [PublicSuffixService](http://rubygems.org/gems/public_suffix_service) 
+Parsing of the host is done entirely by the [PublicSuffix](http://rubygems.org/gems/public_suffix_service) 
 library by [Simone Carletti](http://www.simonecarletti.com/).  
 Parsing of the query string is done entirely by the [Addressable](http://rubygems.org/gems/addressable) 
 library by [Bob Aman](https://rubygems.org/profiles/sporkmonger).  

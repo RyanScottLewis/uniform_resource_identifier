@@ -10,13 +10,13 @@ class UniformResourceIdentifier
     def initialize(host=nil)
       if host.respond_to?(:to_str) 
         begin
-          pss = PublicSuffixService.parse(host)
+          pss = PublicSuffix.parse(host)
           
           @subdomain = pss.trd
-          @domain = Domain.new(:sld => pss.sld, :tld => pss.tld)
-        rescue PublicSuffixService::DomainInvalid
+          @domain = Domain.new(:sld => pss.sld, :tld => pss.tld, :valid => true)
+        rescue PublicSuffix::DomainInvalid
           # We couldn't parse your tld (public suffix) =(
-          @domain = Domain.new(:sld => nil, :tld => host) # TODO: is this proper? see Domain#to_s
+          @domain = Domain.new(:sld => nil, :tld => host, :valid => false) # TODO: is this proper? see Domain#to_s
         end
       elsif host.respond_to?(:to_hash)
         host = host.to_hash.symbolize_keys
@@ -81,5 +81,10 @@ class UniformResourceIdentifier
     def tld=(tld)
       self.domain.tld = tld
     end
+    
+    def valid_public_suffix?
+      self.domain.valid_public_suffix?
+    end
+    
   end
 end

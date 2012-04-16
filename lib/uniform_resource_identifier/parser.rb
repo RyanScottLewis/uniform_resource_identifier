@@ -10,8 +10,10 @@ class UniformResourceIdentifier
       
       regexp = mode == :loose ? LOOSE : STRICT
       match  = uri.match(regexp)
-      keys   = [:protocol, :authority, :user_info, :username, :password, :host,
-                :port, :relative, :path, :directory, :file, :query, :anchor]
+      keys   = [
+        :protocol, :authority, :user_info, :username, :password, :host,
+        :port, :relative, :path, :directory, :file, :query, :anchor
+      ]
       
       keys.each.with_index.inject({}) do |memo, (key, index)|
         memo[key] = match.captures[index]

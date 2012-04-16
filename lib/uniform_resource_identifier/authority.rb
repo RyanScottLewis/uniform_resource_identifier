@@ -126,5 +126,9 @@ class UniformResourceIdentifier
     def tld=(tld)
       self.host.domain.tld = tld
     end
+    
+    def valid_public_suffix?
+      self.host.domain.valid_public_suffix?
+    end
   end
 end

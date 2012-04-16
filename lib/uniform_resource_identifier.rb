@@ -147,6 +147,10 @@ class UniformResourceIdentifier
     self.authority.host.domain = Domain.parse(domain)
   end
   
+  def valid_public_suffix?
+    self.authority.host.domain.valid_public_suffix?
+  end
+  
   def sld
     self.authority.host.domain.sld
   end
@@ -215,10 +219,12 @@ class UniformResourceIdentifier
   # = Extras                                                              = #
   # ======================================================================= #
   
+  # WARNING - TODO: Doesn't work! More logic needed.
   def relative?
     self.host.nil?
   end
   
+  # WARNING - TODO: Doesn't work! More logic needed.
   def absolute?
     !relative?
   end
