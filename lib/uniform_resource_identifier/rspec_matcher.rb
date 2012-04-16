@@ -4,7 +4,6 @@ RSpec::Matchers.define(:have_uri_specification) do |uri_specification|
     false.should == true if uri_specification == {}
     
     url = UniformResourceIdentifier.parse(uri_string)
-    # uri_specification = uri_specification.to_hash # TODO: Needed?
     
     # ======================================================================= #
     # = Protocol/Scheme                                                     = #
@@ -16,6 +15,7 @@ RSpec::Matchers.define(:have_uri_specification) do |uri_specification|
       url.scheme.class.should == String                      # Alias
       url.scheme.to_s.should == uri_specification[:protocol] # Alias
     end
+    
     # ======================================================================= #
     # = Authority                                                           = #
     # ======================================================================= #
@@ -147,5 +147,7 @@ RSpec::Matchers.define(:have_uri_specification) do |uri_specification|
       url.anchor.class.should == String                    # Delegate
       url.anchor.to_s.should == uri_specification[:anchor] # Delegate
     end
+    
+    true.should == true
   end
 end

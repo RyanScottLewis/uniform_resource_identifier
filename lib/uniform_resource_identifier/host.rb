@@ -1,7 +1,7 @@
 require 'uniform_resource_identifier/parsable'
 require 'uniform_resource_identifier/domain'
 require 'active_support/core_ext/hash'
-require 'public_suffix_service'
+require 'public_suffix'
 
 class UniformResourceIdentifier
   class Host

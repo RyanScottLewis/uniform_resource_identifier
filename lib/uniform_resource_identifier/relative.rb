@@ -25,9 +25,10 @@ class UniformResourceIdentifier
     end
     
     def to_s
-      query = "/#{@path}" if @path.blank? || !@path.to_s.starts_with?("/")
+      query = "/#{@path}" if @path.blank? || !@path.to_s[/^\//]
       query = "?#{@query}" unless @query.blank?
       anchor = "##{@anchor}" unless @anchor.blank?
+      
       "#{path}#{query}#{anchor}"
     end
     

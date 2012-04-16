@@ -137,12 +137,24 @@ of the directory path).
 
 The regular expressions used to split the URI are directly from [parseUri.js](http://stevenlevithan.com/demo/parseuri/js/)
 by [Stephen Levithan](http://stevenlevithan.com/).  
-Parsing of the host is done entirely by the [PublicSuffix](http://rubygems.org/gems/public_suffix_service) 
+Parsing of the host is done entirely by the [PublicSuffix](http://rubygems.org/gems/public_suffix) 
 library by [Simone Carletti](http://www.simonecarletti.com/).  
 Parsing of the query string is done entirely by the [Addressable](http://rubygems.org/gems/addressable) 
 library by [Bob Aman](https://rubygems.org/profiles/sporkmonger).  
 Serialization of the query hash is done entirely by the [ActiveSupport](http://rubygems.org/gems/active_support) 
 library by the [Rails](https://github.com/rails/rails) team.  
+
+## Compatibility
+
+`uniform_resource_identifier` was tested in the following Ruby interpreters:
+
+* 1.8.7 - java - 2011-08-23
+* 1.8.7 - i686-darwin11.3.0 - 2012-02-08
+* 1.9.2 - x86_64-darwin11.2.0 - 2011-07-09
+* 1.9.2 - x86_64-darwin11.3.0 - 2012-02-14
+* 1.9.3 - x86_64-darwin11.3.0 - 2011-10-30
+* 1.9.3 - universal.x86_64-darwin11.3.0 - 2012-02-16
+* 1.9.3 - x86_64-darwin11.2.0 - 2011-09-23
 
 ## Resources
 

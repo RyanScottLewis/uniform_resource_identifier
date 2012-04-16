@@ -1,13 +1,13 @@
 require 'uniform_resource_identifier/parsable'
 require 'active_support/core_ext/hash'
-require 'public_suffix_service'
+require 'public_suffix'
 
 class UniformResourceIdentifier
   class Domain
     extend Parsable
     
     def initialize(domain=nil)
-      if domain.respond_to?(:to_str) 
+      if domain.respond_to?(:to_str)
         begin
           pss = PublicSuffix.parse(domain)
           

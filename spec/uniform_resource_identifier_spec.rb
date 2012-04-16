@@ -38,146 +38,143 @@ describe UniformResourceIdentifier do
   subject { UniformResourceIdentifier }
   
   let(:url) do
-    "http://usr:pwd@www.test.com:81/dir/dir.2/foo/bar/index.htm?q1=0&&test1&test2=value&arr[]=one&arr[]=two&hsh[foo]=bar&test3=val3#top"  
+    'http://usr:pwd@www.test.com:81/dir/dir.2/foo/bar/index.htm?q1=0&&test1&test2=value&arr[]=one&arr[]=two&hsh[foo]=bar&test3=val3#top'  
   end
   
-  describe "#parse" do
-    it "should correctly parse the given URL" do
+  describe '#parse' do
+    it 'should correctly parse the given URL' do
       url.should have_uri_specification(
-        :protocol  => "http",
-        :authority => "usr:pwd@www.test.com:81",
-        :user_info => "usr:pwd",
-        :username  => "usr",
-        :password  => "pwd",
-        :host      => "www.test.com",
-        :subdomain => "www",
-        :domain    => "test.com",
-        :sld       => "test",
-        :tld       => "com",
-        :port      => "81",
-        # :relative  => "/dir/dir.2/foo/bar/index.htm?q1=0&test1=true&test2=value&arr[]=one&arr[]=two&hsh[foo]=bar&test3=val3#top",
-        :path      => "/dir/dir.2/foo/bar/index.htm",
-        :directory => "/dir/dir.2/foo/bar/",
-        :file      => "index.htm",
-        # :query     => "q1=0&test1=true&test2=value&arr[]=one&arr[]=two&hsh[foo]=bar&test3=val3",
-        :anchor    => "top"
+        :protocol  => 'http',
+        :authority => 'usr:pwd@www.test.com:81',
+        :user_info => 'usr:pwd',
+        :username  => 'usr',
+        :password  => 'pwd',
+        :host      => 'www.test.com',
+        :subdomain => 'www',
+        :domain    => 'test.com',
+        :sld       => 'test',
+        :tld       => 'com',
+        :port      => '81',
+        :relative  => '/dir/dir.2/foo/bar/index.htm?arr%5B%5D=one&arr%5B%5D=two&hsh%5Bfoo%5D=bar&q1=0&test1=true&test2=value&test3=val3#top',
+        :path      => '/dir/dir.2/foo/bar/index.htm',
+        :directory => '/dir/dir.2/foo/bar/',
+        :file      => 'index.htm',
+        :query     => 'arr%5B%5D=one&arr%5B%5D=two&hsh%5Bfoo%5D=bar&q1=0&test1=true&test2=value&test3=val3',
+        :anchor    => 'top'
       )
       
-      url.should have_uri_specification(
-        :host => "www.test.com"
-      )
+      url.should have_uri_specification(:host => 'www.test.com')
     end
   end
   
-  describe "#to_s" do
-    it "should return the normalized URI" do
-      # subject.parse(url).to_s.should == "http://usr:pwd@www.test.com:81/dir/dir.2/foo/bar/index.htm?q1=0&test1=true&test2=value&arr[]=one&arr[]=two&hsh[foo]=bar&test3=val3#top"
-      subject.parse(url).to_s.should == "http://usr:pwd@www.test.com:81/dir/dir.2/foo/bar/index.htm?arr%5B%5D=one&arr%5B%5D=two&hsh%5Bfoo%5D=bar&q1=0&test1=true&test2=value&test3=val3#top"
+  describe '#to_s' do
+    it 'should return the normalized URI' do
+      subject.parse(url).to_s.should == 'http://usr:pwd@www.test.com:81/dir/dir.2/foo/bar/index.htm?arr%5B%5D=one&arr%5B%5D=two&hsh%5Bfoo%5D=bar&q1=0&test1=true&test2=value&test3=val3#top'
     end
   end
   
-  describe "#to_h" do
-    it "should return the correct Hash result" do
+  describe '#to_h' do
+    it 'should return the correct Hash result' do
       subject.parse(url).to_h.should == {
-        :protocol =>"http",
+        :protocol =>'http',
         :authority => {
           :user_info => {
-            :username => "usr", 
-            :password => "pwd"
+            :username => 'usr', 
+            :password => 'pwd'
           },
           :host => {
-            :subdomain => "www", 
+            :subdomain => 'www', 
             :domain => {
-              :sld => "test", 
-              :tld => "com"
+              :sld => 'test', 
+              :tld => 'com'
             }
           },
           :port => 81
         }, 
         :relative => {
           :path => { 
-            :directory => "/dir/dir.2/foo/bar/", 
-            :file => "index.htm"
+            :directory => '/dir/dir.2/foo/bar/', 
+            :file => 'index.htm'
           }, 
           :query => { # TODO: Should the query_values be strings?
-            "q1" => "0", 
-            "test1" => true, 
-            "test2" => "value", 
-            "arr" => ["one", "two"], 
-            "hsh" => {
-              "foo" => "bar"
+            'q1' => '0', 
+            'test1' => true, 
+            'test2' => 'value', 
+            'arr' => ['one', 'two'], 
+            'hsh' => {
+              'foo' => 'bar'
             },
-            "test3" => "val3"
+            'test3' => 'val3'
           }, 
-          :anchor=>"top"
+          :anchor=>'top'
         }
       }
     end
   end
   
-  describe "The example from the README" do
-    it "should be correct, to say the least." do
-      url = "foo://usr:pwd@www.example.co.uk:8042/over/there.htm?name=ferret#nose"
+  describe 'The example from the README' do
+    it 'should be correct, to say the least.' do
+      url = 'foo://usr:pwd@www.example.co.uk:8042/over/there.htm?name=ferret#nose'
       uri = UniformResourceIdentifier.parse(url)
       
-      uri.protocol.should == "foo"
+      uri.protocol.should == 'foo'
       
-      uri.authority.to_s.should == "usr:pwd@www.example.co.uk:8042"
+      uri.authority.to_s.should == 'usr:pwd@www.example.co.uk:8042'
       
-      uri.authority.user_info.to_s.should == "usr:pwd"
-      uri.user_info.to_s.should == "usr:pwd"
+      uri.authority.user_info.to_s.should == 'usr:pwd'
+      uri.user_info.to_s.should == 'usr:pwd'
       
-      uri.authority.user_info.username.should == "usr"
-      uri.authority.user_info.password.should == "pwd"
-      uri.user_info.username.should == "usr"
-      uri.user_info.password.should == "pwd"
-      uri.username.should == "usr"
-      uri.password.should == "pwd"
+      uri.authority.user_info.username.should == 'usr'
+      uri.authority.user_info.password.should == 'pwd'
+      uri.user_info.username.should == 'usr'
+      uri.user_info.password.should == 'pwd'
+      uri.username.should == 'usr'
+      uri.password.should == 'pwd'
       
-      uri.authority.host.to_s.should == "www.example.co.uk"
-      uri.host.to_s.should == "www.example.co.uk"
+      uri.authority.host.to_s.should == 'www.example.co.uk'
+      uri.host.to_s.should == 'www.example.co.uk'
       
-      uri.authority.host.subdomain.should == "www"
-      uri.authority.subdomain.should == "www"
-      uri.subdomain.should == "www"
+      uri.authority.host.subdomain.should == 'www'
+      uri.authority.subdomain.should == 'www'
+      uri.subdomain.should == 'www'
       
-      uri.authority.host.domain.to_s.should == "example.co.uk"
-      uri.authority.domain.to_s.should == "example.co.uk"
-      uri.domain.to_s.should == "example.co.uk"
+      uri.authority.host.domain.to_s.should == 'example.co.uk'
+      uri.authority.domain.to_s.should == 'example.co.uk'
+      uri.domain.to_s.should == 'example.co.uk'
       
-      uri.authority.host.domain.sld.should == "example"
-      uri.authority.domain.sld.should == "example"
-      uri.domain.sld.should == "example"
-      uri.sld.should == "example"
+      uri.authority.host.domain.sld.should == 'example'
+      uri.authority.domain.sld.should == 'example'
+      uri.domain.sld.should == 'example'
+      uri.sld.should == 'example'
       
-      uri.authority.host.domain.tld.should == "co.uk"
-      uri.authority.domain.tld.should == "co.uk"
-      uri.domain.tld.should == "co.uk"
-      uri.tld.should == "co.uk"
+      uri.authority.host.domain.tld.should == 'co.uk'
+      uri.authority.domain.tld.should == 'co.uk'
+      uri.domain.tld.should == 'co.uk'
+      uri.tld.should == 'co.uk'
       
       uri.authority.port.should == 8042
       uri.port.should == 8042
       
-      uri.relative.to_s.should == "/over/there.htm?name=ferret#nose"
+      uri.relative.to_s.should == '/over/there.htm?name=ferret#nose'
       
-      uri.relative.path.to_s.should == "/over/there.htm"
-      uri.path.to_s.should == "/over/there.htm"
+      uri.relative.path.to_s.should == '/over/there.htm'
+      uri.path.to_s.should == '/over/there.htm'
       
-      uri.relative.path.directory.to_s.should == "/over/"
-      uri.relative.directory.to_s.should == "/over/"
-      uri.directory.to_s.should == "/over/"
+      uri.relative.path.directory.to_s.should == '/over/'
+      uri.relative.directory.to_s.should == '/over/'
+      uri.directory.to_s.should == '/over/'
       
-      uri.relative.path.file.to_s.should == "there.htm"
-      uri.relative.file.to_s.should == "there.htm"
-      uri.file.to_s.should == "there.htm"
+      uri.relative.path.file.to_s.should == 'there.htm'
+      uri.relative.file.to_s.should == 'there.htm'
+      uri.file.to_s.should == 'there.htm'
       
-      uri.relative.query.to_h.should == { "name" => "ferret" }
-      uri.relative.query.to_s.should == "name=ferret"
-      uri.query.to_h.should == { "name" => "ferret" }
-      uri.query.to_s.should == "name=ferret"
+      uri.relative.query.to_h.should == { 'name' => 'ferret' }
+      uri.relative.query.to_s.should == 'name=ferret'
+      uri.query.to_h.should == { 'name' => 'ferret' }
+      uri.query.to_s.should == 'name=ferret'
       
-      uri.relative.anchor.should == "nose"
-      uri.anchor.should == "nose"
+      uri.relative.anchor.should == 'nose'
+      uri.anchor.should == 'nose'
     end
   end
 end
