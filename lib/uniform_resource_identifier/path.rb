@@ -3,6 +3,7 @@ require 'uniform_resource_identifier/parser'
 require 'active_support/core_ext/hash'
 
 class UniformResourceIdentifier
+  
   class Path
     extend Parsable
     
@@ -19,7 +20,7 @@ class UniformResourceIdentifier
     end
     
     def to_s
-      "#{@directory}#{@file}"
+      "#{@directory}#{@file}#{@file.nil? ? nil : @extension}"
     end
     
     def to_h
@@ -32,6 +33,7 @@ class UniformResourceIdentifier
     def blank?
       @directory.blank? && @file.blank?
     end
+    
     # ======================================================================= #
     # = Attributes                                                          = #
     # ======================================================================= #
@@ -39,12 +41,22 @@ class UniformResourceIdentifier
     attr_reader :directory
     attr_reader :file
     
+    def extension
+      ext = File.extname(@file)
+      @extension ||= ext unless ext.empty?
+      @extension
+    end
+    
     def directory=(directory)
       @directory = directory.nil? ? nil : directory.to_s
     end
     
     def file=(file)
       @file = file.nil? ? nil : file.to_s
+    end
+    
+    def extension=(extension)
+      @extension = extension.nil? ? nil : extension.to_s
     end
   end
 end

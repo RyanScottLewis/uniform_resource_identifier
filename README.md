@@ -102,10 +102,10 @@ Or install through RubyGems:
     |   path        |                                                                        |
     |     directory +------------------------------------------------------------------------+
     |     file      |                                                                        |
-    |   query       |   foo://usr:pwd@www.example.co.uk:8042/over/there.htm?name=ferret#nose |
-    |   anchor      |         \_/ \_/ \_/ \___________/     \____/\_______/                  |
-    |               |          |   |   |           |          |       |                      |
-    |               |   username pass subdomain    domain  directory file                    |
+    |     extension |   foo://usr:pwd@www.example.co.uk:8042/over/there.htm?name=ferret#nose |
+    |   query       |         \_/ \_/ \_/ \___________/     \____/\___/\__/                  |
+    |   anchor      |          |   |   |           |          |      \   \                   |
+    |               |   username pass subdomain    domain directory file extension           |
     |               |                                                                        |
     |               +------------------------------------------------------------------------+
     |               |                                                                        |

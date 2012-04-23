@@ -59,6 +59,7 @@ describe UniformResourceIdentifier do
         :path      => '/dir/dir.2/foo/bar/index.htm',
         :directory => '/dir/dir.2/foo/bar/',
         :file      => 'index.htm',
+        :extension => '.htm',
         :query     => 'arr%5B%5D=one&arr%5B%5D=two&hsh%5Bfoo%5D=bar&q1=0&test1=true&test2=value&test3=val3',
         :anchor    => 'top'
       )
@@ -94,7 +95,8 @@ describe UniformResourceIdentifier do
         :relative => {
           :path => { 
             :directory => '/dir/dir.2/foo/bar/', 
-            :file => 'index.htm'
+            :file => 'index.htm',
+            :extension => '.htm',
           }, 
           :query => { # TODO: Should the query_values be strings?
             'q1' => '0', 
@@ -167,6 +169,7 @@ describe UniformResourceIdentifier do
       uri.relative.path.file.to_s.should == 'there.htm'
       uri.relative.file.to_s.should == 'there.htm'
       uri.file.to_s.should == 'there.htm'
+      uri.extension.to_s.should == '.htm'
       
       uri.relative.query.to_h.should == { 'name' => 'ferret' }
       uri.relative.query.to_s.should == 'name=ferret'

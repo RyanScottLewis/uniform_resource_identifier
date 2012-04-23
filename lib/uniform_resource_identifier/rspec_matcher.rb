@@ -134,6 +134,15 @@ RSpec::Matchers.define(:have_uri_specification) do |uri_specification|
       url.file.to_s.should == uri_specification[:file]               # Delegate
     end
     
+    if uri_specification.has_key?(:extension)
+      url.relative.path.extension.class.should == String
+      url.relative.path.extension.to_s.should == uri_specification[:extension]
+      url.relative.extension.class.should == String                            # Delegate
+      url.relative.extension.to_s.should == uri_specification[:extension]      # Delegate
+      url.extension.class.should == String                                     # Delegate
+      url.extension.to_s.should == uri_specification[:extension]               # Delegate
+    end
+    
     if uri_specification.has_key?(:query)
       url.relative.query.class.should == UniformResourceIdentifier::Query
       url.relative.query.to_s.should == uri_specification[:query]
