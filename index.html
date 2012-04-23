@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Uniform Resource Identifier : Easily create, manipulate, and parse URIs." />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Uniform Resource Identifier</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/c00lryguy/uniform_resource_identifier">Fork Me on GitHub</a>
+
+          <h1 id="project_title">Uniform Resource Identifier</h1>
+          <h2 id="project_tagline">Easily create, manipulate, and parse URIs.</h2>
+
+          <section id="downloads">
+            <a class="zip_download_link" href="https://github.com/c00lryguy/uniform_resource_identifier/zipball/master">Download this project as a .zip file</a>
+            <a class="tar_download_link" href="https://github.com/c00lryguy/uniform_resource_identifier/tarball/master">Download this project as a tar.gz file</a>
+          </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <p>Uniform Resource Identifier is a Ruby library created to split URIs according to RFC 3986 as closely as possible or easily create/manipulate the URI.</p>
+
+<blockquote>
+<p>Note: By design, this does not attempt to validate the URI it receives, as that would limit it's flexibility.</p>
+</blockquote>
+
+<h2>Install</h2>
+
+<p>Simply drop the following line into your Gemfile:</p>
+
+<div class="highlight">
+<pre><span class="n">gem</span> <span class="s1">'uniform_resource_identifier'</span><span class="p">,</span> <span class="s1">'~&gt; 0.1.0'</span>
+</pre>
+</div>
+
+
+<p>Or install through RubyGems:</p>
+
+<div class="highlight">
+<pre>gem install uniform_resource_identifier
+</pre>
+</div>
+
+
+<h2>Usage</h2>
+
+<div class="highlight">
+<pre><span class="nb">require</span> <span class="s1">'uniform_resource_identifier'</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="s2">"foo://usr:pwd@www.example.co.uk:8042/over/there.htm?name=ferret#nose"</span>
+<span class="n">uri</span> <span class="o">=</span> <span class="no">UniformResourceIdentifier</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+
+<span class="n">uri</span><span class="o">.</span><span class="n">protocol</span>                      <span class="c1"># =&gt; "foo"</span>
+
+<span class="n">uri</span><span class="o">.</span><span class="n">authority</span><span class="o">.</span><span class="n">to_s</span>                <span class="c1"># =&gt; "usr:pwd@www.example.co.uk:8042"</span>
+
+<span class="n">uri</span><span class="o">.</span><span class="n">authority</span><span class="o">.</span><span class="n">user_info</span><span class="o">.</span><span class="n">to_s</span>      <span class="c1"># =&gt; "usr:pwd"</span>
+<span class="n">uri</span><span class="o">.</span><span class="n">user_info</span><span class="o">.</span><span class="n">to_s</span>                <span class="c1"># =&gt; "usr:pwd"</span>
+
+<span class="n">uri</span><span class="o">.</span><span class="n">authority</span><span class="o">.</span><span class="n">user_info</span><span class="o">.</span><span class="n">username</span>  <span class="c1"># =&gt; "usr"</span>
+<span class="n">uri</span><span class="o">.</span><span class="n">authority</span><span class="o">.</span><span class="n">user_info</span><span class="o">.</span><span class="n">password</span>  <span class="c1"># =&gt; "pwd"</span>
+<span class="n">uri</span><span class="o">.</span><span class="n">user_info</span><span class="o">.</span><span class="n">username</span>            <span class="c1"># =&gt; "usr"</span>
+<span class="n">uri</span><span class="o">.</span><span class="n">user_info</span><span class="o">.</span><span class="n">password</span>            <span class="c1"># =&gt; "pwd"</span>
+<span class="n">uri</span><span class="o">.</span><span class="n">username</span>                      <span class="c1"># =&gt; "usr"</span>
+<span class="n">uri</span><span class="o">.</span><span class="n">password</span>                      <span class="c1"># =&gt; "pwd"</span>
+
+<span class="n">uri</span><span class="o">.</span><span class="n">authority</span><span class="o">.</span><span class="n">host</span><span class="o">.</span><span class="n">to_s</span>           <span class="c1"># =&gt; "www.example.co.uk"</span>
+<span class="n">uri</span><span class="o">.</span><span class="n">host</span><span class="o">.</span><span class="n">to_s</span>                     <span class="c1"># =&gt; "www.example.co.uk"</span>
+
+<span class="n">uri</span><span class="o">.</span><span class="n">authority</span><span class="o">.</span><span class="n">host</span><span class="o">.</span><span class="n">subdomain</span>      <span class="c1"># =&gt; "www"</span>
+<span class="n">uri</span><span class="o">.</span><span class="n">authority</span><span class="o">.</span><span class="n">subdomain</span>           <span class="c1"># =&gt; "www"</span>
+<span class="n">uri</span><span class="o">.</span><span class="n">subdomain</span>                     <span class="c1"># =&gt; "www"</span>
+
+<span class="n">uri</span><span class="o">.</span><span class="n">authority</span><span class="o">.</span><span class="n">host</span><span class="o">.</span><span class="n">domain</span><span class="o">.</span><span class="n">to_s</span>    <span class="c1"># =&gt; "example.co.uk"</span>
+<span class="n">uri</span><span class="o">.</span><span class="n">authority</span><span class="o">.</span><span class="n">domain</span><span class="o">.</span><span class="n">to_s</span>         <span class="c1"># =&gt; "example.co.uk"</span>
+<span class="n">uri</span><span class="o">.</span><span class="n">domain</span><span class="o">.</span><span class="n">to_s</span>                   <span class="c1"># =&gt; "example.co.uk"</span>
+
+<span class="n">uri</span><span class="o">.</span><span class="n">authority</span><span class="o">.</span><span class="n">host</span><span class="o">.</span><span class="n">domain</span><span class="o">.</span><span class="n">sld</span>     <span class="c1"># =&gt; "example"</span>
+<span class="n">uri</span><span class="o">.</span><span class="n">authority</span><span class="o">.</span><span class="n">domain</span><span class="o">.</span><span class="n">sld</span>          <span class="c1"># =&gt; "example"</span>
+<span class="n">uri</span><span class="o">.</span><span class="n">domain</span><span class="o">.</span><span class="n">sld</span>                    <span class="c1"># =&gt; "example"</span>
+<span class="n">uri</span><span class="o">.</span><span class="n">sld</span>                           <span class="c1"># =&gt; "example"</span>
+
+<span class="n">uri</span><span class="o">.</span><span class="n">authority</span><span class="o">.</span><span class="n">host</span><span class="o">.</span><span class="n">domain</span><span class="o">.</span><span class="n">tld</span>     <span class="c1"># =&gt; "co.uk"</span>
+<span class="n">uri</span><span class="o">.</span><span class="n">authority</span><span class="o">.</span><span class="n">domain</span><span class="o">.</span><span class="n">tld</span>          <span class="c1"># =&gt; "co.uk"</span>
+<span class="n">uri</span><span class="o">.</span><span class="n">domain</span><span class="o">.</span><span class="n">tld</span>                    <span class="c1"># =&gt; "co.uk"</span>
+<span class="n">uri</span><span class="o">.</span><span class="n">tld</span>                           <span class="c1"># =&gt; "co.uk"</span>
+
+<span class="n">uri</span><span class="o">.</span><span class="n">authority</span><span class="o">.</span><span class="n">port</span>                <span class="c1"># =&gt; 8042</span>
+<span class="n">uri</span><span class="o">.</span><span class="n">port</span>                          <span class="c1"># =&gt; 8042</span>
+
+<span class="n">uri</span><span class="o">.</span><span class="n">relative</span><span class="o">.</span><span class="n">to_s</span>                 <span class="c1"># =&gt; "/over/there.htm?name=ferret#nose"</span>
+
+<span class="n">uri</span><span class="o">.</span><span class="n">relative</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">to_s</span>            <span class="c1"># =&gt; "/over/there.htm"</span>
+<span class="n">uri</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">to_s</span>                     <span class="c1"># =&gt; "/over/there.htm"</span>
+
+<span class="n">uri</span><span class="o">.</span><span class="n">relative</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">directory</span><span class="o">.</span><span class="n">to_s</span>  <span class="c1"># =&gt; "/over/"</span>
+<span class="n">uri</span><span class="o">.</span><span class="n">relative</span><span class="o">.</span><span class="n">directory</span><span class="o">.</span><span class="n">to_s</span>       <span class="c1"># =&gt; "/over/"</span>
+<span class="n">uri</span><span class="o">.</span><span class="n">directory</span><span class="o">.</span><span class="n">to_s</span>                <span class="c1"># =&gt; "/over/"</span>
+
+<span class="n">uri</span><span class="o">.</span><span class="n">relative</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">to_s</span>       <span class="c1"># =&gt; "there.htm"</span>
+<span class="n">uri</span><span class="o">.</span><span class="n">relative</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">to_s</span>            <span class="c1"># =&gt; "there.htm"</span>
+<span class="n">uri</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">to_s</span>                     <span class="c1"># =&gt; "there.htm"</span>
+
+<span class="n">uri</span><span class="o">.</span><span class="n">relative</span><span class="o">.</span><span class="n">query</span>                <span class="c1"># =&gt; { "name" =&gt; "ferret" }</span>
+<span class="n">uri</span><span class="o">.</span><span class="n">query</span>                         <span class="c1"># =&gt; { "name" =&gt; "ferret" }</span>
+
+<span class="n">uri</span><span class="o">.</span><span class="n">relative</span><span class="o">.</span><span class="n">anchor</span>               <span class="c1"># =&gt; "nose"</span>
+<span class="n">uri</span><span class="o">.</span><span class="n">anchor</span>                        <span class="c1"># =&gt; "nose"</span>
+</pre>
+</div>
+
+
+<h2>URI Graph</h2>
+
+<pre><code>+---------------+------------------------------------------------------------------------+
+| Legend        | Graph                                                                  |
++===============+========================================================================+
+| protocol      |                                                                        |
+| authority     |   foo://usr:pwd@www.example.co.uk:8042/over/there.htm?name=ferret#nose |
+|   user_info   |   \_/   \____________________________/\______________________________/ |
+|     username  |    |                 |                               |                 |
+|     password  | protocol         authority                        relative             |
+|   host        |                                                                        |
+|     subdomain +------------------------------------------------------------------------+
+|     domain    |                                                                        |
+|       sld     |   foo://usr:pwd@www.example.co.uk:8042/over/there.htm?name=ferret#nose |
+|       tld     |         \_____/ \_______________/ \__/\_____________/ \_________/ \__/ |
+|   port        |            |           |           |       |               |       /   |
+| relative      |        user_info      host        port    path           query  anchor |
+|   path        |                                                                        |
+|     directory +------------------------------------------------------------------------+
+|     file      |                                                                        |
+|   query       |   foo://usr:pwd@www.example.co.uk:8042/over/there.htm?name=ferret#nose |
+|   anchor      |         \_/ \_/ \_/ \___________/     \____/\_______/                  |
+|               |          |   |   |           |          |       |                      |
+|               |   username pass subdomain    domain  directory file                    |
+|               |                                                                        |
+|               +------------------------------------------------------------------------+
+|               |                                                                        |
+|               |   foo://usr:pwd@www.example.co.uk:8042/over/there.htm?name=ferret#nose |
+|               |                     \_____/ \___/                                      |
+|               |                        |      |                                        |
+|               |                       sld    tld                                       |
+|               |                                                                        |
++---------------+------------------------------------------------------------------------+
+</code></pre>
+
+<h2>Notes</h2>
+
+<p>The regular expressions used to split the URI are directly from <a href="http://stevenlevithan.com/demo/parseuri/js/">parseUri.js</a>
+by <a href="http://stevenlevithan.com/">Stephen Levithan</a>.<br>
+Parsing of the host is done entirely by the <a href="http://rubygems.org/gems/public_suffix">PublicSuffix</a> 
+library by <a href="http://www.simonecarletti.com/">Simone Carletti</a>.<br>
+Parsing of the query string is done entirely by the <a href="http://rubygems.org/gems/addressable">Addressable</a> 
+library by <a href="https://rubygems.org/profiles/sporkmonger">Bob Aman</a>.<br>
+Serialization of the query hash is done entirely by the <a href="http://rubygems.org/gems/active_support">ActiveSupport</a> 
+library by the <a href="https://github.com/rails/rails">Rails</a> team.  </p>
+
+<h2>Compatibility</h2>
+
+<p><code>uniform_resource_identifier</code> was tested in the following Ruby interpreters:</p>
+
+<ul>
+<li>1.8.7 - java - 2011-08-23</li>
+<li>1.8.7 - i686-darwin11.3.0 - 2012-02-08</li>
+<li>1.9.2 - x86_64-darwin11.2.0 - 2011-07-09</li>
+<li>1.9.2 - x86_64-darwin11.3.0 - 2012-02-14</li>
+<li>1.9.3 - x86_64-darwin11.3.0 - 2011-10-30</li>
+<li>1.9.3 - universal.x86_64-darwin11.3.0 - 2012-02-16</li>
+<li>1.9.3 - x86_64-darwin11.2.0 - 2011-09-23</li>
+</ul><h2>Resources</h2>
+
+<ul>
+<li><a href="http://tools.ietf.org/html/rfc3986">RFC 3986</a></li>
+</ul><h1>Contributing</h1>
+
+<ul>
+<li>Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet</li>
+<li>Check out the issue tracker to make sure someone already hasn't requested it and/or contributed it</li>
+<li>Fork the project</li>
+<li>Start a feature/bugfix branch</li>
+<li>Commit and push until you are happy with your contribution</li>
+<li>Make sure to add tests for it. This is important so I don't break it in a future version unintentionally.</li>
+<li>Please try not to mess with the Rakefile, version, or history. If you want to have your own version, or is otherwise necessary, that is fine, but please isolate to its own commit so I can cherry-pick around it.</li>
+</ul><h1>Copyright</h1>
+
+<p>Copyright (c) 2011-2012 Ryan Scott Lewis. See LICENSE for further details.</p>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Uniform Resource Identifier maintained by <a href="https://github.com/c00lryguy">c00lryguy</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
