@@ -22,8 +22,9 @@
           <h2 id="project_tagline">Easily create, manipulate, and parse URIs.</h2>
 
           <section id="downloads">
+            <a class="gem_download_link" href="https://rubygems.org/downloads/uniform_resource_identifier-0.1.22.gem">Download this project as a .gem file</a>
             <a class="zip_download_link" href="https://github.com/c00lryguy/uniform_resource_identifier/zipball/master">Download this project as a .zip file</a>
-            <a class="tar_download_link" href="https://github.com/c00lryguy/uniform_resource_identifier/tarball/master">Download this project as a tar.gz file</a>
+            <a class="tar_download_link" href="https://github.com/c00lryguy/uniform_resource_identifier/tarball/master">Download this project as a .tar.gz file</a>
           </section>
         </header>
     </div>
@@ -32,10 +33,6 @@
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
         <p>Uniform Resource Identifier is a Ruby library created to split URIs according to RFC 3986 as closely as possible or easily create/manipulate the URI.</p>
-
-<blockquote>
-<p>Note: By design, this does not attempt to validate the URI it receives, as that would limit it's flexibility.</p>
-</blockquote>
 
 <h2>Install</h2>
 
@@ -122,41 +119,33 @@
 </pre>
 </div>
 
+<blockquote>
+<p>Note: By design, this does not attempt to validate the URI it receives, as that would limit it's flexibility.</p>
+</blockquote>
 
 <h2>URI Graph</h2>
 
-<pre><code>+---------------+------------------------------------------------------------------------+
-| Legend        | Graph                                                                  |
-+===============+========================================================================+
-| protocol      |                                                                        |
-| authority     |   foo://usr:pwd@www.example.co.uk:8042/over/there.htm?name=ferret#nose |
-|   user_info   |   \_/   \____________________________/\______________________________/ |
-|     username  |    |                 |                               |                 |
-|     password  | protocol         authority                        relative             |
-|   host        |                                                                        |
-|     subdomain +------------------------------------------------------------------------+
-|     domain    |                                                                        |
-|       sld     |   foo://usr:pwd@www.example.co.uk:8042/over/there.htm?name=ferret#nose |
-|       tld     |         \_____/ \_______________/ \__/\_____________/ \_________/ \__/ |
-|   port        |            |           |           |       |               |       /   |
-| relative      |        user_info      host        port    path           query  anchor |
-|   path        |                                                                        |
-|     directory +------------------------------------------------------------------------+
-|     file      |                                                                        |
-|   query       |   foo://usr:pwd@www.example.co.uk:8042/over/there.htm?name=ferret#nose |
-|   anchor      |         \_/ \_/ \_/ \___________/     \____/\_______/                  |
-|               |          |   |   |           |          |       |                      |
-|               |   username pass subdomain    domain  directory file                    |
-|               |                                                                        |
-|               +------------------------------------------------------------------------+
-|               |                                                                        |
-|               |   foo://usr:pwd@www.example.co.uk:8042/over/there.htm?name=ferret#nose |
-|               |                     \_____/ \___/                                      |
-|               |                        |      |                                        |
-|               |                       sld    tld                                       |
-|               |                                                                        |
-+---------------+------------------------------------------------------------------------+
-</code></pre>
+<div class="highlight"><pre>
+  foo://usr:pwd@www.example.co.uk:8042/over/there.htm?name=ferret#nose
+  <span class="c1">\_/   \____________________________/\______________________________/
+    \                 |                               |               
+  protocol        authority                        relative</span>            
+                                                                      
+  foo://usr:pwd@www.example.co.uk:8042/over/there.htm?name=ferret#nose
+        <span class="c1">\_____/ \_______________/ \__/\_____________/ \_________/ \__/
+           |           |           |       |               |       /  
+       user_info      host        port    path           query  anchor</span>
+                                                                      
+  foo://usr:pwd@www.example.co.uk:8042/over/there.htm?name=ferret#nose
+        <span class="c1">\_/ \_/ \_/ \___________/     \____/\_______/                 
+         |   |   |           |          |       |                     
+   username pass subdomain  domain  directory file</span>                   
+                                                                      
+  foo://usr:pwd@www.example.co.uk:8042/over/there.htm?name=ferret#nose
+                    <span class="c1">\_____/ \___/                                     
+                       |      |                                       
+                      sld    tld</span>                                      
+</pre></div>
 
 <h2>Notes</h2>
 
