@@ -10,7 +10,7 @@ the URI it receives, as that would limit its flexibility.
 
 Simply drop the following line into your Gemfile:
 
-    gem 'uniform_resource_identifier', '~> 0.1.0'
+    gem 'uniform_resource_identifier', '~> 0.1'
 
 Or install through RubyGems:
 
