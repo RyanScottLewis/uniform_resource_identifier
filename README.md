@@ -1,5 +1,7 @@
 # uniform_resource_identifier
 
+http://ryanscottlewis.github.com/uniform_resource_identifier/
+
 `uniform_resource_identifier` is a library to split URIs 
 according to RFC 3986 as closely as possible. 
 
